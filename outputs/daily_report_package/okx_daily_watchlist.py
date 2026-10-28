@@ -208,29 +208,29 @@ def render(items, failures, local_now):
     return "\n".join(lines) + "\n"
 
 
-def pushplus(content: str):
-    token = os.environ.get("PUSHPLUS_TOKEN", "").strip()
-    if not token:
-        raise RuntimeError("缺少 PUSHPLUS_TOKEN；请在 GitHub 仓库 Secrets 中配置")
+def send_wxpusher(content: str):
+    spt = os.environ.get("WXPUSHER_SPT", "").strip()
+    if not spt:
+        print("未配置 WXPUSHER_SPT：日报已生成并保存，但本次未发送到微信。")
+        return
     payload = json.dumps({
-        "token": token,
-        "title": "OKX USDT 永续自选日报",
+        "spt": spt,
         "content": content,
-        "channel": "wechat",
-        "template": "markdown",
+        "summary": "OKX USDT 永续自选日报",
+        "contentType": 3,
     }).encode("utf-8")
     request = urllib.request.Request(
-        "https://www.pushplus.plus/send",
+        "https://wxpusher.zjiecode.com/api/send/message/simple-push",
         data=payload,
         headers={"Content-Type": "application/json", "User-Agent": "OKX-Daily-Watchlist/1.0"},
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT) as response:
         result = json.loads(response.read().decode("utf-8"))
-    if result.get("code") != 200:
-        raise RuntimeError(f"PushPlus 接口返回失败 code={result.get('code')} msg={result.get('msg', '')}")
-    # Do not print token or full request/response identifiers to logs.
-    print("PushPlus 已受理推送请求（此响应不等于微信最终送达）。")
+    if str(result.get("code")) != "1000" or result.get("success") is False:
+        raise RuntimeError(f"WxPusher 接口返回失败 code={result.get('code')} msg={result.get('msg', '')}")
+    # Do not print SPT or full response identifiers to logs.
+    print("WxPusher 已受理推送请求（此响应不等于微信最终送达）。")
 
 
 def main():
@@ -270,7 +270,7 @@ def main():
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(report, encoding="utf-8")
     print(f"报告已写入 {REPORT_PATH}; 成功 {len(items)}，失败/不可用 {len(failures)}。")
-    pushplus(report)
+    send_wxpusher(report)
 
 
 if __name__ == "__main__":

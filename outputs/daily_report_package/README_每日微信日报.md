@@ -2,7 +2,7 @@
 
 本包包含：
 
-- `okx_daily_watchlist.py`：读取 OKX 公开行情，生成中文日报并通过 PushPlus 微信公众号渠道转发。
+- `okx_daily_watchlist.py`：读取 OKX 公开行情，生成中文日报并通过 WxPusher 转发。
 - 仓库根目录工作流：`.github/workflows/okx-daily-wechat.yml`，每天 `Africa/Algiers` 09:00 运行，也可在 Actions 手动运行。
 
 程序只读取公开市场数据，不需要 OKX API Key，不含下单功能。
@@ -29,9 +29,11 @@
 
 在仓库页面进入 **Settings → Secrets and variables → Actions → New repository secret**，分别创建：
 
-### `PUSHPLUS_TOKEN`
+### `WXPUSHER_SPT`
 
-到 PushPlus 官方网站登录，完成微信渠道绑定及账户要求后，在个人中心获取 Token。把 Token 直接粘贴进 GitHub Secret 表单；不要把它发到聊天、提交到代码或截图公开。PushPlus 接口成功受理不等于最终微信送达，首次运行后还要检查 PushPlus 消息记录及微信绑定状态。
+在手机安装 WxPusher App，按 App 指引绑定微信 ClawBot。随后打开 WxPusher 官方极简推送页面，使用微信扫码获取个人 SPT。把 SPT 直接填进 GitHub Secret 表单；不要把它发到聊天、提交到代码或截图公开。SPT 泄露后，别人可能向你推送消息。
+
+WxPusher 官方说明其推送服务免费；微信 ClawBot 通道需在 App 内绑定并激活，激活后 24 小时最多接收 10 条微信推送。每天一条报告在该上限内。接口返回成功仅表示创建了发送任务，不代表微信已经送达；首次运行后还需确认微信消息。
 
 ### `OKX_WATCHLIST`
 
@@ -43,9 +45,9 @@ BTCUSDT,ETHUSDT,ARUSDT,IRYSUSDT,LABUSDT,HYPEUSDT,ZECUSDT,BNBUSDT,SOLUSDT,APTUSDT
 
 ## 启用与查看
 
-文件提交到默认分支且两个 Secrets 配好后，进入仓库 **Actions → OKX Daily Watchlist WeChat Report**。可以点 **Run workflow** 做首次手动运行。绿色完成后，在运行页底部 **Artifacts** 下载 `okx-daily-watchlist-report` 查看 Markdown 报告；同时检查 PushPlus 是否显示发送成功并在微信收到消息。
+文件提交到默认分支且两个 Secrets 配好后，进入仓库 **Actions → OKX Daily Watchlist WeChat Report**。可以点 **Run workflow** 做首次手动运行。绿色完成后，在运行页底部 **Artifacts** 下载 `okx-daily-watchlist-report` 查看 Markdown 报告；同时检查 WxPusher 和微信是否收到消息。
 
-若运行失败，先打开运行记录看 `Generate and send report` 步骤。常见原因是 Secret 名称/值不正确、PushPlus 尚未绑定微信、公开 API 临时不可用，或所选合约已不在 OKX 交易。
+若运行失败，先打开运行记录看 `Generate and send report` 步骤。常见原因是 Secret 名称/值不正确、WxPusher 尚未绑定或激活微信通道、公开 API 临时不可用，或所选合约已不在 OKX 交易。
 
 ## 数据与风险限制
 
@@ -58,5 +60,5 @@ BTCUSDT,ETHUSDT,ARUSDT,IRYSUSDT,LABUSDT,HYPEUSDT,ZECUSDT,BNBUSDT,SOLUSDT,APTUSDT
 ## 官方资料
 
 - OKX API 文档：<https://www.okx.com/docs-v5/en/>
-- PushPlus 消息接口文档：<https://pushplus.plus/doc/guide/api.html>
+- WxPusher 文档：<https://wxpusher.zjiecode.com/docs/>
 - GitHub Actions 定时工作流说明：<https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows>
