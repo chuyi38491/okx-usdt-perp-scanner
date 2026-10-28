@@ -1,0 +1,49 @@
+name: OKX USDT 5-Minute Monitor
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: okx-5m-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore previous OI and alert state
+        uses: actions/cache/restore@v4
+        with:
+          path: outputs/monitor_data/state.json
+          key: okx-5m-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            okx-5m-${{ runner.os }}-
+      - name: Scan OKX markets once
+        run: |
+          set -euo pipefail
+          python outputs/okx_usdt_5m_monitor.py --once
+          test -f outputs/monitor_data/latest_report.md
+      - name: Save previous OI and alert state
+        uses: actions/cache/save@v4
+        with:
+          path: outputs/monitor_data/state.json
+          key: okx-5m-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: okx-5-minute-report
+          path: outputs/monitor_data/latest_report.md
+          if-no-files-found: error
+          retention-days: 7
