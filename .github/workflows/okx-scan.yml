@@ -1,0 +1,46 @@
+name: OKX USDT Perpetual Scanner
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: okx-scan-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore previous OI snapshot
+        uses: actions/cache/restore@v4
+        with:
+          path: outputs/okx-usdt-perp-scanner/state.json
+          key: okx-oi-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            okx-oi-${{ runner.os }}-
+      - name: Scan OKX markets
+        run: python outputs/okx-usdt-perp-scanner/okx_scanner.py
+      - name: Save OI snapshot
+        uses: actions/cache/save@v4
+        with:
+          path: outputs/okx-usdt-perp-scanner/state.json
+          key: okx-oi-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Upload scan report
+        uses: actions/upload-artifact@v4
+        with:
+          name: okx-anomaly-report
+          path: outputs/okx-usdt-perp-scanner/reports/okx-anomaly-report.*
+          if-no-files-found: error
+          retention-days: 7
