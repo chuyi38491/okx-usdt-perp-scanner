@@ -1,0 +1,42 @@
+name: OKX Daily Watchlist WeChat Report
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+      timezone: Africa/Algiers
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: okx-daily-watchlist
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate and send report
+        env:
+          OKX_WATCHLIST: ${{ secrets.OKX_WATCHLIST }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: python outputs/daily_report_package/okx_daily_watchlist.py
+
+      - name: Save report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: okx-daily-watchlist-report
+          path: daily-watchlist-report.md
+          if-no-files-found: warn
+          retention-days: 14
