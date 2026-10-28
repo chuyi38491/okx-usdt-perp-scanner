@@ -177,8 +177,6 @@ def main() -> None:
                 "all_time_low": low,
                 "threshold": threshold,
                 "triggered": triggered,
-                "last_price": price,
-                "sampled_at": checked_at,
                 "source": "OKX USDT永续合约自上市以来的1D历史K线低点",
             }
             print(f"{inst_id}: price={price:.10g}; ATL={low:.10g}; threshold={threshold:.10g}; active={triggered}")
