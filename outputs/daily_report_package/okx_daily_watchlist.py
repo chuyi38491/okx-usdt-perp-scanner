@@ -117,8 +117,8 @@ def fetch_one(api: Api, inst_id: str, swap_ticker: dict, spot_tickers: dict, oi_
     })
     oi_change = None
     if len(oi_hist) >= 2:
-        oi_hist.sort(key=lambda x: int(x.get("ts", "0")))
-        older, newer = num(oi_hist[-2].get("oiUsd")), num(oi_hist[-1].get("oiUsd"))
+        oi_hist.sort(key=lambda x: int(x.get("ts", "0") if isinstance(x, dict) else x[0]))
+        older, newer = (num(r.get("oiUsd")) if isinstance(r, dict) else num(r[3]) for r in oi_hist[-2:])
         if older and newer is not None:
             oi_change = (newer / older - 1) * 100
 
