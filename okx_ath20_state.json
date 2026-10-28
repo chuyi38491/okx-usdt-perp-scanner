@@ -1,0 +1,74 @@
+{
+  "BTC-USDT-SWAP": {
+    "all_time_low": 3728.8,
+    "threshold": 4474.56,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "ETH-USDT-SWAP": {
+    "all_time_low": 85.39,
+    "threshold": 102.468,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "AR-USDT-SWAP": {
+    "all_time_low": 1.256,
+    "threshold": 1.5071999999999999,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "IRYS-USDT-SWAP": {
+    "all_time_low": 0.01172,
+    "threshold": 0.014063999999999998,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "LAB-USDT-SWAP": {
+    "all_time_low": 0.03637,
+    "threshold": 0.043643999999999995,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "HYPE-USDT-SWAP": {
+    "all_time_low": 9.319,
+    "threshold": 11.1828,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "ZEC-USDT-SWAP": {
+    "all_time_low": 184.74,
+    "threshold": 221.68800000000002,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "BNB-USDT-SWAP": {
+    "all_time_low": 201.58,
+    "threshold": 241.89600000000002,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "SOL-USDT-SWAP": {
+    "all_time_low": 3.0,
+    "threshold": 3.5999999999999996,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "APT-USDT-SWAP": {
+    "all_time_low": 0.506,
+    "threshold": 0.6072,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "TRUMP-USDT-SWAP": {
+    "all_time_low": 1.359,
+    "threshold": 1.6308,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  },
+  "DOGE-USDT-SWAP": {
+    "all_time_low": 0.00244,
+    "threshold": 0.0029279999999999996,
+    "triggered": false,
+    "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
+  }
+}
