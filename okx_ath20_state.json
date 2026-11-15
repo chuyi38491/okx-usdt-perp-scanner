@@ -20,7 +20,7 @@
   "IRYS-USDT-SWAP": {
     "all_time_low": 0.01172,
     "threshold": 0.014063999999999998,
-    "triggered": true,
+    "triggered": false,
     "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
   },
   "LAB-USDT-SWAP": {
