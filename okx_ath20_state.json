@@ -54,14 +54,14 @@
     "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
   },
   "APT-USDT-SWAP": {
-    "all_time_low": 0.395,
-    "threshold": 0.474,
+    "all_time_low": 0.3807,
+    "threshold": 0.45683999999999997,
     "triggered": true,
     "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
   },
   "TRUMP-USDT-SWAP": {
-    "all_time_low": 0.8723,
-    "threshold": 1.04676,
+    "all_time_low": 0.8212,
+    "threshold": 0.98544,
     "triggered": true,
     "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
   },
