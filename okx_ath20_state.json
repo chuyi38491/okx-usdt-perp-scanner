@@ -24,8 +24,8 @@
     "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
   },
   "LAB-USDT-SWAP": {
-    "all_time_low": 0.02894,
-    "threshold": 0.034728,
+    "all_time_low": 0.02855,
+    "threshold": 0.03426,
     "triggered": true,
     "source": "OKX USDT永续合约自上市以来的1D历史K线低点"
   },
